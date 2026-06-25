@@ -20,6 +20,26 @@
             <p>Sube la foto de tu plato y la IA hará el conteo por ti.</p>
         </header>
 
+    <div id="dailyDashboard" class="glass-panel" style="margin-bottom: 2rem; padding: 1.5rem;">
+        <h3 style="text-align: center; margin-bottom: 1rem;">Progreso Diario</h3>
+    
+        <div class="config-grid" style="display: flex; gap: 5px; justify-content: center; margin-bottom: 1rem;">
+            <input type="number" id="goal-cal" placeholder="Kcal" style="width: 50px;">
+            <input type="number" id="goal-pro" placeholder="Pro" style="width: 50px;">
+            <input type="number" id="goal-carb" placeholder="Carb" style="width: 50px;">
+            <input type="number" id="goal-fat" placeholder="Fat" style="width: 50px;">
+            <button onclick="updateGoals()" style="padding: 2px 8px;">OK</button>
+        </div>
+
+        <div class="macros-grid">
+            <div class="macro-card cal"><h3>Calorías</h3><p id="d-cal">0</p><span>/<span id="goal-cal-val">2000</span></span></div>
+            <div class="macro-card pro"><h3>Proteínas</h3><p id="d-pro">0</p><span>/<span id="goal-pro-val">150</span>g</span></div>
+            <div class="macro-card carb"><h3>Carbos</h3><p id="d-carb">0</p><span>/<span id="goal-carb-val">250</span>g</span></div>
+            <div class="macro-card fat"><h3>Grasas</h3><p id="d-fat">0</p><span>/<span id="goal-fat-val">70</span>g</span></div>
+        </div>
+        <button id="resetDaily" style="display:block; margin: 10px auto 0; background:none; border:none; color:#64748b; cursor:pointer; font-size:0.8rem;">Reiniciar día</button>
+    </div>
+
         <main>
             <div class="upload-area" id="uploadArea">
                 <input type="file" id="imageInput" accept="image/*" hidden>
