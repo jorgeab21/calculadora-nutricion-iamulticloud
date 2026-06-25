@@ -246,3 +246,66 @@ p {
 @keyframes spin {
     to { transform: rotate(360deg); }
 }
+
+
+
+#dailyDashboard {
+    background: var(--glass-bg); 
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.config-grid {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.config-grid input {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 8px;
+    color: white;
+    text-align: center;
+    width: 65px; 
+}
+
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.config-grid button {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s;
+}
+
+.config-grid button:hover {
+    background: var(--primary-hover);
+}
+
+
+#dailyDashboard .macros-grid {
+    margin-bottom: 0.5rem;
+}
+
+#dailyDashboard .macro-card {
+    padding: 0.8rem;
+}
+
+#dailyDashboard .macro-card p {
+    font-size: 1.2rem; 
+}

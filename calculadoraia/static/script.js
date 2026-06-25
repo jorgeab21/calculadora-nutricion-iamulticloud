@@ -1,3 +1,68 @@
+let dailyMacros = JSON.parse(localStorage.getItem('dailyMacros')) || { cal: 0, pro: 0, carb: 0, fat: 0 };
+let goals = JSON.parse(localStorage.getItem('goals')) || { cal: 2000, pro: 150, carb: 250, fat: 70 };
+
+
+function updateDashboardDisplay() {
+    
+    const elements = {
+        cal: document.getElementById('d-cal'),
+        pro: document.getElementById('d-pro'),
+        carb: document.getElementById('d-carb'),
+        fat: document.getElementById('d-fat'),
+        calGoal: document.getElementById('goal-cal-val'),
+        proGoal: document.getElementById('goal-pro-val'),
+        carbGoal: document.getElementById('goal-carb-val'),
+        fatGoal: document.getElementById('goal-fat-val')
+    };
+
+    
+    elements.cal.textContent = Math.round(dailyMacros.cal);
+    elements.pro.textContent = Math.round(dailyMacros.pro);
+    elements.carb.textContent = Math.round(dailyMacros.carb);
+    elements.fat.textContent = Math.round(dailyMacros.fat);
+
+    
+    elements.calGoal.textContent = goals.cal;
+    elements.proGoal.textContent = goals.pro;
+    elements.carbGoal.textContent = goals.carb;
+    elements.fatGoal.textContent = goals.fat;
+
+    
+    elements.cal.style.color = dailyMacros.cal > goals.cal ? '#ef4444' : 'white';
+    elements.pro.style.color = dailyMacros.pro > goals.pro ? '#ef4444' : 'white';
+    elements.carb.style.color = dailyMacros.carb > goals.carb ? '#ef4444' : 'white';
+    elements.fat.style.color = dailyMacros.fat > goals.fat ? '#ef4444' : 'white';
+}
+
+
+function updateGoals() {
+    const inputCal = document.getElementById('goal-cal');
+    const inputPro = document.getElementById('goal-pro');
+    const inputCarb = document.getElementById('goal-carb');
+    const inputFat = document.getElementById('goal-fat');
+
+    
+    goals.cal = parseInt(inputCal.value) || goals.cal;
+    goals.pro = parseInt(inputPro.value) || goals.pro;
+    goals.carb = parseInt(inputCarb.value) || goals.carb;
+    goals.fat = parseInt(inputFat.value) || goals.fat;
+    
+    
+    localStorage.setItem('goals', JSON.stringify(goals));
+    updateDashboardDisplay();
+
+    inputCal.value = '';
+    inputPro.value = '';
+    inputCarb.value = '';
+    inputFat.value = '';
+}
+
+function resetDaily() {
+    dailyMacros = { cal: 0, pro: 0, carb: 0, fat: 0 };
+    localStorage.setItem('dailyMacros', JSON.stringify(dailyMacros));
+    updateDashboardDisplay();
+}
+
 const uploadArea = document.getElementById('uploadArea');
 const imageInput = document.getElementById('imageInput');
 const imagePreview = document.getElementById('imagePreview');
@@ -95,15 +160,28 @@ analyzeBtn.addEventListener('click', async () => {
 });
 
 function renderResults(data) {
+    
     elFoodName.textContent = data.food_identified || 'Plato Analizado';
     elMicro.textContent = data.micronutrients || 'Información de micronutrientes no disponible.';
+    
     animateValue(elCal, 0, data.calories || 0, 1000);
     animateValue(elPro, 0, data.protein_g || 0, 1000);
     animateValue(elCarb, 0, data.carbs_g || 0, 1000);
     animateValue(elFat, 0, data.fats_g || 0, 1000);
 
     resultsPanel.classList.remove('hidden');
+
+
+    dailyMacros.cal += data.calories || 0;
+    dailyMacros.pro += data.protein_g || 0;
+    dailyMacros.carb += data.carbs_g || 0;
+    dailyMacros.fat += data.fats_g || 0;
+    
+    
+    localStorage.setItem('dailyMacros', JSON.stringify(dailyMacros));
+    updateDashboardDisplay();
 }
+
 function animateValue(obj, start, end, duration) {
     let startTimestamp = null;
     const step = (timestamp) => {
@@ -126,3 +204,6 @@ function showError(msg) {
 function hideError() {
     errorBox.classList.add('hidden');
 }
+
+document.getElementById('resetDaily').addEventListener('click', resetDaily);
+updateDashboardDisplay();
