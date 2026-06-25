@@ -11,7 +11,19 @@ if not GEMINI_API_KEY:
 
 client = genai.Client(api_key=GEMINI_API_KEY)
 
-SYSTEM_INSTRUCTION = ""
+SYSTEM_INSTRUCTION = """
+Eres un nutricionista experto. Analiza la imagen de comida proporcionada y devuelve un objeto JSON estricto con la siguiente estructura:
+{
+    "food_identified": "Nombre descriptivo del plato",
+    "calories": 0,
+    "protein_g": 0,
+    "carbs_g": 0,
+    "fats_g": 0,
+    "micronutrients": "Breve descripción de vitaminas/minerales clave presentes"
+}
+Asegúrate de que los valores numéricos sean números (no texto).
+No incluyas texto fuera del JSON. Si no puedes identificar la comida, haz tu mejor estimación.
+"""
 
 def analyze_food_image_with_vertex(image_bytes: bytes, mime_type: str = "image/jpeg") -> dict:
     ""
